@@ -83,7 +83,7 @@ const std::string& Infinity::model()
 Infinity::Image Infinity::capture()
 {
 	LUCAM_SNAPSHOT settings;
-	snapshot_settings(settings);
+	apply_snapshot_settings(settings);
 
 	Image image(settings.format.width, settings.format.height, monochrome());
 
@@ -95,7 +95,7 @@ Infinity::Image Infinity::capture()
 void Infinity::capture(void* image)
 {
 	LUCAM_SNAPSHOT settings;
-	snapshot_settings(settings);
+	apply_snapshot_settings(settings);
 
 	capture(image, &settings);
 }
@@ -122,7 +122,7 @@ void Infinity::raw_capture(void* buffer, LUCAM_SNAPSHOT* settings)
 void Infinity::convert(Image& buffer, void* image)
 {
 	LUCAM_CONVERSION settings;
-	conversion_settings(settings);
+	apply_conversion_settings(settings);
 
 	if (!LucamConvertFrameToRgb48(handle(), (WORD*) image, buffer.data(), buffer.width(), buffer.height(), LUCAM_PF_16, &settings)) throw last_exception();
 }
@@ -281,7 +281,7 @@ std::string Infinity::get_model()
 	}
 }
 
-void Infinity::snapshot_settings(LUCAM_SNAPSHOT& s)
+void Infinity::apply_snapshot_settings(LUCAM_SNAPSHOT& s)
 {
 	s.exposure = exposure();
 	s.gain = gain();
@@ -293,10 +293,10 @@ void Infinity::snapshot_settings(LUCAM_SNAPSHOT& s)
 
 	s.shutterType = LUCAM_SHUTTER_TYPE_GLOBAL;
 	s.timeout = s.exposure + 10000;
-	frame_format(s.format);
+	apply_frame_format(s.format);
 }
 
-void Infinity::frame_format(LUCAM_FRAME_FORMAT& f)
+void Infinity::apply_frame_format(LUCAM_FRAME_FORMAT& f)
 {
 	f.xOffset = _actual_target.left;
 	f.yOffset = _actual_target.top;
@@ -308,7 +308,7 @@ void Infinity::frame_format(LUCAM_FRAME_FORMAT& f)
 	f.subSampleY = 1;
 }
 
-void Infinity::conversion_settings(LUCAM_CONVERSION& c)
+void Infinity::apply_conversion_settings(LUCAM_CONVERSION& c)
 {
 	c.CorrectionMatrix = LUCAM_CM_FLUORESCENT;
 	c.DemosaicMethod = LUCAM_DM_HIGH_QUALITY;

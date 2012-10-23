@@ -106,9 +106,9 @@ private:
 	float get_property(ULONG code, long *flags);
 	void set_property(ULONG code, float value, long flags = 0);
 
-	void snapshot_settings(LUCAM_SNAPSHOT& s);
-	void frame_format(LUCAM_FRAME_FORMAT& f);
-	void conversion_settings(LUCAM_CONVERSION& c);
+	void apply_snapshot_settings(LUCAM_SNAPSHOT& s);
+	void apply_frame_format(LUCAM_FRAME_FORMAT& f);
+	void apply_conversion_settings(LUCAM_CONVERSION& c);
 
 	std::string get_model();
 

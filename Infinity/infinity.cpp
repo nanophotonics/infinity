@@ -293,6 +293,17 @@ void Infinity::apply_snapshot_settings(LUCAM_SNAPSHOT& s)
 
 	s.shutterType = LUCAM_SHUTTER_TYPE_GLOBAL;
 	s.timeout = s.exposure + 10000;
+	
+	s.strobeFlags = 0;
+	s.strobeDelay = 0;
+	s.exposureDelay = 0;
+	s.useHwTrigger = FALSE;
+
+	s.ulReserved1 = 0;
+	s.ulReserved2 = 0;
+	s.flReserved1 = 0;
+	s.flReserved2 = 0;
+
 	apply_frame_format(s.format);
 }
 
@@ -306,6 +317,8 @@ void Infinity::apply_frame_format(LUCAM_FRAME_FORMAT& f)
 	f.pixelFormat = LUCAM_PF_16;
 	f.subSampleX = 1;
 	f.subSampleY = 1;
+	f.flagsX = 0;
+	f.flagsY = 0;
 }
 
 void Infinity::apply_conversion_settings(LUCAM_CONVERSION& c)
